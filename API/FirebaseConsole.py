@@ -8,9 +8,13 @@ import os
 def initialize_firebase():
     json_file = os.path.join(settings.BASE_DIR, 'API/robinhood-clinic-firebase-adminsdk-mwkvd-cde212e319.json')
 
-    # initializations
-    cred = credentials.Certificate(json_file)
-    firebase_admin.initialize_app(cred)
+    try:
+        firebase_admin.get_app()
+    except:
+        # initializations
+        cred = credentials.Certificate(json_file)
+        firebase_admin.initialize_app(cred)
+
     db = firestore.client()
 
     return db
@@ -30,4 +34,14 @@ def find_user(username):
 
     for user in user_ref:
         print('{} ==> {}'.format(user.id, user.to_dict()))
+
+def find_admin_user(username):
+    db = initialize_firebase()
+    user_ref = db.collection('admin_user').where('username', '==', username).stream()
+
+    for user in user_ref:
+        print('{} ==> {}'.format(user.id, user.to_dict()))
+        return user.to_dict()
+
+    return None
 

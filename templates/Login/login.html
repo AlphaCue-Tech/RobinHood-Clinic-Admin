@@ -24,8 +24,18 @@
                     <img src="{% static 'images/logo/robinhood.png' %}" width="300" height="300">
                 </div>
                 <div class="col-12" style="height:100px;"></div>
+                <div class="mx-auto" style="color:red">
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
                 <div class="col-12">
-                    <form action="#">
+                    <form action="{% url 'Dashboard:login' %}" method="POST">
+                        {% csrf_token %}
                       <label for="username">Username:</label><br>
                       <input type="text" id="username" name="username"><br>
                       <label for="password">Password:</label><br>
