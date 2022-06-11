@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from API.FirebaseConsole import find_admin_user
+from API.FirebaseConsole import get_all_users, create_user, add_item, get_all_products
 from django.contrib import messages
 
 
@@ -9,33 +9,10 @@ def home(request):
         if request.session['username']:
             print('ALL OK')
         else:
-            return redirect('Dashboard:login')
+            return redirect('User:login')
     except:
-        return redirect('Dashboard:login')
+        return redirect('User:login')
     return render(request, 'dashboard/dashboard.html')
-
-def login(request):
-
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        admin_user = find_admin_user(username)
-
-        if admin_user == None:
-            messages.add_message(request, messages.ERROR, 'User Not Found')
-            return render(request, 'Login/login.html')
-        else:
-            if admin_user['password'] == password:
-                request.session['username'] = username
-                return redirect('Dashboard:home')
-            else:
-                messages.add_message(request, messages.ERROR, 'Wrong Credentials')
-            return render(request, 'Login/login.html')
-
-
-    else:
-        return render(request, 'Login/login.html')
 
 def check_login(request):
     try:
@@ -45,3 +22,60 @@ def check_login(request):
             return redirect('Dashboard:login')
     except:
         return redirect('Dashboard:login')
+
+def all_user(request):
+    user_list = get_all_users()
+    context = {
+        'user_list': user_list
+    }
+
+    return render(request, 'user/view_user.html', context=context)
+
+def add_user(request):
+
+    if request.method == 'POST':
+        try:
+            Username = request.POST.get('Username')
+            Password = request.POST.get('Password')
+
+            fb = create_user(Username, Password)
+            if fb:
+                messages.add_message(request, messages.SUCCESS, 'User Created')
+            else:
+                messages.add_message(request, messages.SUCCESS, 'User Exist')
+        except:
+            messages.add_message(request, messages.ERROR, 'Input Error')
+
+
+    context = {
+    }
+
+    return render(request, 'user/add_user.html', context=context)
+
+def create_item(request):
+
+    if request.method == 'POST':
+        try:
+            name = request.POST.get('name')
+            cost = request.POST.get('cost')
+
+            add_item(name, cost)
+
+            messages.add_message(request, messages.SUCCESS, 'Product Added')
+
+        except:
+            messages.add_message(request, messages.ERROR, 'Input Error')
+
+
+    context = {
+    }
+
+    return render(request, 'clinic/add_item.html', context=context)
+
+def all_products_view(request):
+    product_list = get_all_products()
+    context = {
+        'product_list': product_list
+    }
+
+    return render(request, 'clinic/view_items.html', context=context)

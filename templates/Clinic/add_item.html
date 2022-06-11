@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Product{% endblock %}
+
+{% block body %}
+<!-- ============================================================== -->
+<!-- basic form  -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">Add Product</h5>
+            <p>
+                <div class="mx-auto" style="color:red">
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </p>
+            <div class="card-body">
+                <form action="{% url 'Dashboard:create_item' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Product Name</label>
+                        <input id="name" type="text" placeholder="Product Name" name="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="cost">Cost (BDT)</label>
+                        <input id="cost" name="cost" type="number" placeholder="Cost (BDT)" class="form-control">
+                    </div>
+                    <button class="btn btn-warning" type="submit">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- end basic form  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+
+
+{% endblock %}

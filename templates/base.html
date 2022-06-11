@@ -160,7 +160,7 @@
                             <div id="submenu-1" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Dashboard</a>
+                                        <a class="nav-link" href="{% url 'Dashboard:home' %}">Dashboard</a>
                                     </li>
                                 </ul>
                             </div>
@@ -194,8 +194,8 @@
                             <div id="submenu-6" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Create User</a>
-                                        <a class="nav-link" href="#">View Users</a>
+                                        <a class="nav-link" href="{% url 'Dashboard:add_user' %}">Create User</a>
+                                        <a class="nav-link" href="{% url 'Dashboard:all_user' %}">View Users</a>
                                     </li>
                                 </ul>
                             </div>
@@ -205,8 +205,8 @@
                             <div id="submenu-5" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Create Items</a>
-                                        <a class="nav-link" href="#">View Items</a>
+                                        <a class="nav-link" href="{% url 'Dashboard:create_item' %}">Create Items</a>
+                                        <a class="nav-link" href="{% url 'Dashboard:all_products_view' %}">View Items</a>
                                     </li>
                                 </ul>
                             </div>
@@ -290,6 +290,26 @@
 <!-- MATH MATHEMATICS-->
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="{% static 'main/assets/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'main/assets/vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'main/assets/vendor/slimscroll/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'main/assets/vendor/multi-select/js/jquery.multi-select.js' %}"></script>
+<script src="{% static 'main/assets/libs/js/main-js.js' %}"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'main/assets/vendor/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="{% static 'main/assets/vendor/datatables/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'main/assets/vendor/datatables/js/data-table.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 
 {% block custom_js %}
 {% endblock %}
