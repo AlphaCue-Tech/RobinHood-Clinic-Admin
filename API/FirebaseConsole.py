@@ -43,7 +43,6 @@ def find_user(username):
     else:
         return None
 
-
 def find_admin_user(username):
     db = initialize_firebase()
     user_ref = db.collection('admin_user').where('username', '==', username).stream()
@@ -68,15 +67,50 @@ def get_all_users():
 
     return user_list
 
+def get_all_users_dict():
+    db = initialize_firebase()
+    user_ref = db.collection('users').stream()
+    user_dict = {}
+
+    for user in user_ref:
+        d = user.to_dict()
+        d['lastLogin'] = timeConvert(d['lastLogin'])
+
+        user_dict[user.id] = d
+
+    return user_dict
+
+
+def get_all_admin_users_dict():
+    db = initialize_firebase()
+    user_ref = db.collection('admin_user').stream()
+    admin_user_dict = {}
+
+    for user in user_ref:
+        d = user.to_dict()
+        admin_user_dict[user.id] = d
+
+    return admin_user_dict
+
 def get_all_invoices():
     db = initialize_firebase()
     invoice_ref = db.collection('invoices').stream()
     invoice_list = []
 
+    user_dict = get_all_users_dict()
+    admin_user_dict = get_all_admin_users_dict()
+
     for invoice in invoice_ref:
         print('{} ==> {}'.format(invoice.id, invoice.to_dict()))
         d = invoice.to_dict()
         d['id'] = invoice.id
+        #d['customer_name'] = d['customerId']['name']
+        #'DocumentReference'        object        has        no        attribute        'to_dict'
+        #print(user_dict[str(d['customerId']).split('/')[2]])
+        #print(admin_user_dict[str(d['invoiceBy']).split('/')[2]])
+        print(str(d['customerId'].__str__))
+        print(d['invoiceBy'])
+
         invoice_list.append(d)
 
     return invoice_list

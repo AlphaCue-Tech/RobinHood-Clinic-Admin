@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from API.FirebaseConsole import get_all_users, create_user, add_item, get_all_products
+from API.FirebaseConsole import get_all_users, create_user, add_item, get_all_products, get_all_invoices
 from django.contrib import messages
 
 
@@ -79,3 +79,13 @@ def all_products_view(request):
     }
 
     return render(request, 'clinic/view_items.html', context=context)
+
+def all_invoice_list(request):
+    invoice_list = get_all_invoices()
+
+    context = {
+        'invoice_list':invoice_list
+    }
+
+    return render(request, 'Clinic/all_invoices.html', context=context)
+
