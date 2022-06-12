@@ -80,7 +80,6 @@ def get_all_users_dict():
 
     return user_dict
 
-
 def get_all_admin_users_dict():
     db = initialize_firebase()
     user_ref = db.collection('admin_user').stream()
@@ -97,19 +96,13 @@ def get_all_invoices():
     invoice_ref = db.collection('invoices').stream()
     invoice_list = []
 
-    user_dict = get_all_users_dict()
-    admin_user_dict = get_all_admin_users_dict()
-
     for invoice in invoice_ref:
         print('{} ==> {}'.format(invoice.id, invoice.to_dict()))
         d = invoice.to_dict()
         d['id'] = invoice.id
-        #d['customer_name'] = d['customerId']['name']
-        #'DocumentReference'        object        has        no        attribute        'to_dict'
-        #print(user_dict[str(d['customerId']).split('/')[2]])
-        #print(admin_user_dict[str(d['invoiceBy']).split('/')[2]])
-        print(str(d['customerId'].__str__))
-        print(d['invoiceBy'])
+        d['CUSTOMER_NAME'] = d['customerId'].get().to_dict()['name']
+        d['CUSTOMER_PHONE'] = d['customerId'].get().to_dict()['phone']
+        d['invoiceBy'] = d['invoiceBy'].get().to_dict()['username']
 
         invoice_list.append(d)
 
@@ -127,6 +120,19 @@ def get_all_products():
         pro_list.append(d)
 
     return pro_list
+
+def get_all_products_dict():
+    db = initialize_firebase()
+    pro_ref = db.collection('products').stream()
+    pro_dict = {}
+
+    for pro in pro_ref:
+        d = pro.to_dict()
+        d['id'] = pro.id
+
+        pro_dict[pro.id] = d
+
+    return pro_dict
 
 def create_user(username, password):
     if find_user(username) is None:
@@ -150,3 +156,30 @@ def add_item(name, cost):
         'name': name,
         'cost': cost
     })
+
+def get_single_invoice(id):
+    db = initialize_firebase()
+    invoice_ref = db.collection('invoices').document(id)
+    all_pro_dict = get_all_products_dict()
+    try:
+        invoice = invoice_ref.get()
+        invoice_dict = invoice.to_dict()
+        invoice_dict['id'] = id
+        item_list = []
+
+        for key, value in invoice_dict['items'].items():
+            it = {
+                'id': key,
+                'quantity': value,
+                'name': all_pro_dict[key]['name'],
+                'cost': all_pro_dict[key]['cost'],
+                'total': all_pro_dict[key]['cost']*value
+            }
+            item_list.append(it)
+        invoice_dict['ITEM_LIST'] = item_list
+
+        invoice_dict['CUSTOMER'] = invoice_dict['customerId'].get().to_dict()
+
+        return invoice_dict
+    except:
+        return None

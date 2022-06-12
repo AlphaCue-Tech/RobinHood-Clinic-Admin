@@ -8,5 +8,6 @@ urlpatterns=[
     path('Items/All', all_products_view, name='all_products_view'),
     path('Items/Add', create_item, name='create_item'),
     path('Invoice/All', all_invoice_list, name='all_invoice_list'),
+    path('Invoice/View/<id>', single_invoice, name='single_invoice'),
 
 ]

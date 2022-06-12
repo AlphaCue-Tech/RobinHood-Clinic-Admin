@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Invoice #{{invoice.id}}{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="section-block" id="cards">
+            <h3 class="section-title">Invoice No. #{{invoice.id}}</h3>
+            <p></p>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Name: {{invoice.CUSTOMER.name}}</h3>
+                <h3 class="card-title">Phone: {{invoice.CUSTOMER.phone}}</h3>
+                <h3 class="card-title">Address: {{invoice.CUSTOMER.address}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Date: {{invoice.time}}</h3>
+                <h3 class="card-title">Payment: {{invoice.paymentMethod}}</h3>
+                <h3 class="card-title">Ref No: {{invoice.id}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <!-- ============================================================== -->
+    <!-- basic table  -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">All Items</h5>
+            <div class="card-body">
+                <div class="table">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Cost</th>
+                            <th>Bill</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in invoice.ITEM_LIST %}
+                        <tr>
+                            <td>{{item.name}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.cost}}</td>
+                            <td>{{item.total}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td>{{invoice.totalBill}}</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end basic table  -->
+    <!-- ============================================================== -->
+
+</div>
+
+
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from API.FirebaseConsole import get_all_users, create_user, add_item, get_all_products, get_all_invoices
+from API.FirebaseConsole import get_all_users, create_user, add_item, get_all_products, get_all_invoices, get_single_invoice
 from django.contrib import messages
 
 
@@ -89,3 +89,15 @@ def all_invoice_list(request):
 
     return render(request, 'Clinic/all_invoices.html', context=context)
 
+def single_invoice(request, id):
+    invoice = get_single_invoice(id)
+
+    if not invoice == None:
+
+        context = {
+            'invoice': invoice
+        }
+        print(invoice)
+        return render(request, 'Clinic/invoice.html', context=context)
+    else:
+        return render(request, 'Clinic/not_found.html')

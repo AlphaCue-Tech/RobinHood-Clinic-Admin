@@ -21,16 +21,18 @@
                             <th>Bill (Method)</th>
                             <th>Invoice by</th>
                             <th>Time</th>
+                            <td></td>
                         </tr>
                         </thead>
                         <tbody>
                         {% for invoice in invoice_list %}
                         <tr>
                             <td>{{invoice.id}}</td>
-                            <td>{{invoice.customerId}}</td>
+                            <td>{{invoice.CUSTOMER_NAME}} <span>&#9742;</span> {{invoice.CUSTOMER_PHONE}}</td>
                             <td>{{invoice.totalBill}} ({{invoice.paymentMethod}})</td>
                             <td>{{invoice.invoiceBy}}</td>
                             <td>{{invoice.time}}</td>
+                            <td><a href="{% url 'Dashboard:single_invoice' id=invoice.id %}" class="btn btn-warning">View</a></td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -41,6 +43,7 @@
                             <th>Bill (Method)</th>
                             <th>Invoice by</th>
                             <th>Time</th>
+                            <td></td>
                         </tr>
                         </tfoot>
                     </table>
