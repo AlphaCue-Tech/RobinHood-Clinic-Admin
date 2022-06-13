@@ -57,7 +57,7 @@ def create_item(request):
     if request.method == 'POST':
         try:
             name = request.POST.get('name')
-            cost = request.POST.get('cost')
+            cost = float(request.POST.get('cost'))
 
             add_item(name, cost)
 
