@@ -25,3 +25,7 @@ def login(request):
 
     else:
         return render(request, 'Login/login.html')
+
+def logout(request):
+    request.session['username'] = None
+    return redirect('Login:login')
