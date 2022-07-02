@@ -70,7 +70,7 @@ def create_item(request):
     context = {
     }
 
-    return render(request, 'clinic/add_item.html', context=context)
+    return render(request, 'Clinic/add_item.html', context=context)
 
 def all_products_view(request):
     product_list = get_all_products()
@@ -78,7 +78,7 @@ def all_products_view(request):
         'product_list': product_list
     }
 
-    return render(request, 'clinic/view_items.html', context=context)
+    return render(request, 'Clinic/view_items.html', context=context)
 
 def all_invoice_list(request):
     invoice_list = get_all_invoices()
